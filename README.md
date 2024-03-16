@@ -1,4 +1,4 @@
-# WebProgramming_Oblig2
+# WebProgramming - Oblig 2
 
 OsloMet username: hakau9101
 
