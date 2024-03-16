@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cinema Tickets</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <script src="oblig2.js"></script>
+</head>
+<body>
+
+<!-- Form for ordering cinema tickets -->
+<div class="container">
+    <div class="row">
+        <h1>Order cinema tickets</h1>
+        <div class="col-md-5">
+            <form class="form">
+                <div class="form-group">
+                    <label>Select movie:</label>
+                    <div id="movies" class="dropdown"></div>
+                    <span id="moviesErr" style="color: red"></span>
+                </div>
+                <div class="form-group">
+                    <label for="number">Number</label>
+                    <input type="text" class="number" id="number" maxlength="2" size="2" onchange="validateNumber()"/>
+                    <span id="numberErr" style="color: red"></span>
+                </div>
+                <div class="form-group">
+                    <label for="fname">Name</label>
+                    <input type="text" class="form-control" id="fname" onchange="validateFname()"/>
+                    <span id="fnameErr" style="color: red"></span>
+                </div>
+                <div class="form-group">
+                    <label for="sname">Surname</label>
+                    <input type="text" class="form-control" id="sname" onchange="validateSname()"/>
+                    <span id="snameErr" style="color: red"></span>
+                </div>
+                <div class="form-group">
+                    <label for="tel">Phone number</label>
+                    <input type="text" class="form-control" id="tel" onchange="validateTel()"/>
+                    <span id="telErr" style="color: red"></span>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control" id="email" onchange="validateEmail()"/>
+                    <span id="emailErr" style="color: red"></span>
+                </div>
+            </form>
+            <button class="btn btn-primary" onclick="buyTicket()">Buy ticket</button>
+        </div>
+
+        <!-- List of purchased tickets -->
+        <div class="col-md-10">
+            <h2>All tickets</h2>
+            <form class="form">
+                <div id="allTickets" class="table-responsive"></div>
+            </form>
+
+            <!-- Button to delete all tickets -->
+            <button class="btn btn-danger" onclick="deleteTickets()">Delete all tickets</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
