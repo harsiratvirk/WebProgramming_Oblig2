@@ -4,7 +4,7 @@ $(function () {
     saveMovies();
 });
 
-// Fetch movies dropdown list from the server
+// Fetch movies dropdown list from server
 function saveMovies() {
     $.get("/saveMovies", function (movies) {
         formatMovies(movies);
@@ -14,7 +14,7 @@ function saveMovies() {
 // Format movies dropdown list
 function formatMovies(movies) {
     let defaultValue = "Choose movie here";
-    let out = "<select id='selectedMovie'>";
+    let out = "<select id='selectedMovie' onchange='validateMovies()'>";
     out += "<option value='default'>" + defaultValue + "</option>";
 
     for (const movie of movies) {
@@ -44,7 +44,7 @@ function buyTicket() {
         getTickets(tickets);
     });
     // Resets input fields after sending the ticket
-    $("#selectedMovie").val("");
+    $("#selectedMovie").val("default");
     $("#number").val("");
     $("#fname").val("");
     $("#sname").val("");
@@ -79,78 +79,108 @@ function formatTickets(tickets) {
     $("#allTickets").html(out);
 }
 
+// Deletes all tickets
+function deleteTickets() {
+    $.get("/deleteTickets", function () {
+        getTickets();
+    });
+}
+
 // Input validation and check for empty fields
 function validateMovies() {
     const movies = $("#selectedMovie").val();
+    const moviesErrBorder = $("#selectedMovie");
     const moviesErr = $("#moviesErr");
 
     if (movies === "" || movies === "default") {
         moviesErr.text("Movie is required");
+        moviesErrBorder.css("border-color", "red");
     } else {
-        moviesErr.text(""); // Resets field
+        moviesErr.text(""); // Empty field
+        moviesErrBorder.css("border-color", "");
     }
 }
 
 function validateNumber() {
     const number = $("#number").val();
+    const numberErrBorder = $("#number");
     const numberErr = $("#numberErr");
 
     if (number === "") {
         numberErr.text("Quantity is required");
+        numberErrBorder.css("border-color", "red");
     } else if (isNaN(number) || number < 1) {
         numberErr.text("Enter numbers");
+        numberErrBorder.css("border-color", "red");
     } else {
         numberErr.text("");
+        numberErrBorder.css("border-color", "");
     }
 }
 
 function validateFname() {
     const fname = $("#fname").val();
+    const fnameErrBorder = $("#fname");
     const fnameErr = $("#fnameErr");
 
     if (fname === "") {
         fnameErr.text("Name is required");
+        fnameErrBorder.css("border-color", "red");
     } else {
         fnameErr.text("");
+        fnameErrBorder.css("border-color", "");
     }
 }
 
 function validateSname() {
     const sname = $("#sname").val();
+    const snameErrBorder = $("#sname");
     const snameErr = $("#snameErr");
 
     if (sname === "") {
         snameErr.text("Surname is required");
+        snameErrBorder.css("border-color", "red");
     } else {
         snameErr.text("");
+        snameErrBorder.css("border-color", "");
     }
 }
 
 function validateTel() {
-    const tel = $("#tel").val();
-    const telErr = $("#telErr");
     const telRegex = /^[0-9]{8}$/;
+
+    const tel = $("#tel").val();
+    const telErrBorder = $("#tel");
+    const telErr = $("#telErr");
 
     if (tel === "") {
         telErr.text("Phone number is required");
+        telErrBorder.css("border-color", "red");
     } else if (!telRegex.test(tel)) {
         telErr.text("Enter a valid phone number");
+        telErrBorder.css("border-color", "red");
     } else {
         telErr.text("");
+        telErrBorder.css("border-color", "");
     }
 }
 
 function validateEmail() {
-    const email = $("#email").val();
-    const emailErr = $("#emailErr");
     const emailRegex = /^[a-zA-Z0-9._%&+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    const email = $("#email").val();
+    const emailErrBorder = $("#email");
+    const emailErr = $("#emailErr");
 
     if (email === "") {
         emailErr.text("Email address is required");
+        emailErrBorder.css("border-color", "red");
     } else if (!emailRegex.test(email)) {
         emailErr.text("Enter a valid email address");
+        emailErrBorder.css("border-color", "red");
     } else {
         emailErr.text("");
+        emailErrBorder.css("border-color", "");
     }
 }
 
@@ -172,12 +202,4 @@ function checkValidation() {
         $("#telErr").text() ||
         $("#emailErr").text();
     return !validationError;
-}
-
-
-// Deletes all tickets
-function deleteTickets() {
-    $.get("/deleteTickets", function () {
-        getTickets();
-    });
 }
